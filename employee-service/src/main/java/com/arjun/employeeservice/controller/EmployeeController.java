@@ -1,5 +1,6 @@
 package com.arjun.employeeservice.controller;
 
+import com.arjun.employeeservice.dto.APIResponseDto;
 import com.arjun.employeeservice.dto.EmployeeDto;
 import com.arjun.employeeservice.entity.Employee;
 import com.arjun.employeeservice.service.EmployeeService;
@@ -16,16 +17,16 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody  EmployeeDto employeeDto){
-        EmployeeDto savedEmployeeDto = employeeService.saveEmployee(employeeDto);
-        return new ResponseEntity<>(savedEmployeeDto, HttpStatus.CREATED);
+    public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody EmployeeDto employeeDto){
+        EmployeeDto savedEmployee = employeeService.saveEmployee(employeeDto);
+        return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
 
 
     @GetMapping("{id}")
-    public ResponseEntity<EmployeeDto> getEmployeebyId(@PathVariable("id") Long employeeId){
-        EmployeeDto employeeDto = employeeService.getEmployeeById(employeeId);
-        return new ResponseEntity<>(employeeDto,HttpStatus.OK);
+    public ResponseEntity<APIResponseDto> getEmployee(@PathVariable("id") Long employeeId){
+        APIResponseDto apiResponseDto = employeeService.getEmployeeById(employeeId);
+        return new ResponseEntity<>(apiResponseDto, HttpStatus.OK);
     }
 
 }

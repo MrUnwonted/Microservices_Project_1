@@ -48,10 +48,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public APIResponseDto getEmployeeById(Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId).get();
 
-       ResponseEntity<DepartmentDto> responseEntity= restTemplate.getForEntity("http://localhost:8080/api/departments"
-                       + employee.getDepartmentCode(),DepartmentDto.class);
+        ResponseEntity<DepartmentDto> responseEntity = restTemplate.getForEntity("http://DEPARTMENT-SERVICE/api/departments/" + employee.getDepartmentCode(),
+                DepartmentDto.class);
 
-       DepartmentDto departmentDto = responseEntity.getBody();
+        DepartmentDto departmentDto = responseEntity.getBody();
 
         EmployeeDto employeeDto = new EmployeeDto(
                 employee.getId(),
@@ -64,6 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         APIResponseDto apiResponseDto = new APIResponseDto();
         apiResponseDto.setEmployee(employeeDto);
         apiResponseDto.setDepartment(departmentDto);
+
 
         return apiResponseDto;
     }

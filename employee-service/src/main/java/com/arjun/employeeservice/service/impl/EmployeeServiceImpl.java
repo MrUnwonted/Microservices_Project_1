@@ -5,6 +5,7 @@ import com.arjun.employeeservice.dto.DepartmentDto;
 import com.arjun.employeeservice.dto.EmployeeDto;
 import com.arjun.employeeservice.entity.Employee;
 import com.arjun.employeeservice.repository.EmployeeRepository;
+import com.arjun.employeeservice.service.APIClient;
 import com.arjun.employeeservice.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +18,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
-
 //    private RestTemplate  restTemplate;
+//    private WebClient webClient;
 
-    private WebClient webClient;
+    private APIClient apiClient;
+
+
 
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employrrDto) {
@@ -51,17 +54,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     public APIResponseDto getEmployeeById(Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId).get();
 
+//        Using REST Template client method
 //        ResponseEntity<DepartmentDto> responseEntity = restTemplate.getForEntity("http://localhost:8082/api/departments/" + employee.getDepartmentCode(),
 //                DepartmentDto.class);
 //
 //        DepartmentDto departmentDto = responseEntity.getBody();
 
-      DepartmentDto departmentDto =  webClient.get()
-                .uri("http://localhost:8082/api/departments/" + employee.getDepartmentCode())
-                .retrieve()
-                .bodyToMono(DepartmentDto.class)
-                .block();
+        //        Using WebFlux dependency method
+//      DepartmentDto departmentDto =  webClient.get()
+//                .uri("http://localhost:8082/api/departments/" + employee.getDepartmentCode())
+//                .retrieve()
+//                .bodyToMono(DepartmentDto.class)
+//                .block();
 
+        DepartmentDto departmentDto = apiClient.getDepartment(employee.getDepartmentCode());
 
         EmployeeDto employeeDto = new EmployeeDto(
                 employee.getId(),

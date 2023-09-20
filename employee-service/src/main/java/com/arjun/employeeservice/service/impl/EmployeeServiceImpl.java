@@ -4,6 +4,7 @@ import com.arjun.employeeservice.dto.APIResponseDto;
 import com.arjun.employeeservice.dto.DepartmentDto;
 import com.arjun.employeeservice.dto.EmployeeDto;
 import com.arjun.employeeservice.entity.Employee;
+import com.arjun.employeeservice.mapper.EmployeeMapper;
 import com.arjun.employeeservice.repository.EmployeeRepository;
 import com.arjun.employeeservice.service.APIClient;
 import com.arjun.employeeservice.service.EmployeeService;
@@ -33,25 +34,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public EmployeeDto saveEmployee(EmployeeDto employrrDto) {
+    public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
 
-        Employee employee = new Employee(
-                employrrDto.getId(),
-                employrrDto.getFirstName(),
-                employrrDto.getLastName(),
-                employrrDto.getEmail(),
-                employrrDto.getDepartmentCode()
-        );
+        Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
 
         Employee savedEmployee = employeeRepository.save(employee);
 
-        EmployeeDto savedEmployeeDto = new EmployeeDto(
-                savedEmployee.getId(),
-                savedEmployee.getFirstName(),
-                savedEmployee.getLastName(),
-                savedEmployee.getEmail(),
-                savedEmployee.getDepartmentCode()
-        );
+        EmployeeDto savedEmployeeDto = EmployeeMapper.mapToEmployeeDto(employee);
 
 
         return savedEmployeeDto;
@@ -80,13 +69,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 //        DepartmentDto departmentDto = apiClient.getDepartment(employee.getDepartmentCode());
 
-        EmployeeDto employeeDto = new EmployeeDto(
-                employee.getId(),
-                employee.getFirstName(),
-                employee.getLastName(),
-                employee.getEmail(),
-                employee.getDepartmentCode()
-        );
+        EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(employee);
 
         APIResponseDto apiResponseDto = new APIResponseDto();
         apiResponseDto.setEmployee(employeeDto);
@@ -107,13 +90,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      departmentDto.setDepartmentCode("RD001");
      departmentDto.setDepartmentDescription("Research and Development Department");
 
-        EmployeeDto employeeDto = new EmployeeDto(
-                employee.getId(),
-                employee.getFirstName(),
-                employee.getLastName(),
-                employee.getEmail(),
-                employee.getDepartmentCode()
-        );
+        EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(employee);
 
         APIResponseDto apiResponseDto = new APIResponseDto();
         apiResponseDto.setEmployee(employeeDto);

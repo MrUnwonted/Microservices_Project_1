@@ -2,6 +2,7 @@ package com.arjun.departmentservice.service.impl;
 
 import com.arjun.departmentservice.dto.DepartmentDto;
 import com.arjun.departmentservice.entity.Department;
+import com.arjun.departmentservice.mapper.DepartmentMapper;
 import com.arjun.departmentservice.repository.DepartmentRepository;
 import com.arjun.departmentservice.service.DepartmentService;
 import lombok.AllArgsConstructor;
@@ -16,23 +17,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentDto saveDepartment(DepartmentDto departmentDto) {
 
-        Department department = new Department(
-                departmentDto.getId(),
-                departmentDto.getDepartmentName(),
-                departmentDto.getDepartmentDescription(),
-                departmentDto.getDepartmentCode()
-        );
+     Department department = DepartmentMapper.mapToDepartment(departmentDto);
 
         Department savedDepartment = departmentRepository.save(department);
 
-        DepartmentDto saveDepartmentDto = new DepartmentDto(
-                savedDepartment.getId(),
-                savedDepartment.getDepartmentName(),
-                savedDepartment.getDepartmentDescription(),
-                savedDepartment.getDepartmentCode()
-
-
-        );
+        DepartmentDto saveDepartmentDto = DepartmentMapper.mapToDepartmentDto(department);
 
         return saveDepartmentDto;
     }
@@ -42,12 +31,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
         Department department = departmentRepository.findByDepartmentCode(code);
 
-        DepartmentDto departmentDto = new DepartmentDto(
-                department.getId(),
-                department.getDepartmentName(),
-                department.getDepartmentDescription(),
-                department.getDepartmentCode()
-        );
+        DepartmentDto departmentDto = DepartmentMapper.mapToDepartmentDto(department);
+
         return departmentDto;
     }
 }

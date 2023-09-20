@@ -14,6 +14,7 @@ public class OrganizationController {
 
     private OrganizationService organizationService;
 
+    // Build Save Organization REST API
     @PostMapping
     public ResponseEntity<OrganizationDto> saveOrganization(@RequestBody OrganizationDto organizationDto){
         OrganizationDto savedOrganization = organizationService.saveOrganization(organizationDto);

@@ -9,11 +9,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Table(name = "organizations")
 public class Organization {
 
@@ -23,10 +23,8 @@ public class Organization {
     @Column(nullable = false)
     private String organizationName;
     private String organizationDescription;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String organizationCode;
     @CreationTimestamp
     private LocalDateTime createdDate;
-
-
 }

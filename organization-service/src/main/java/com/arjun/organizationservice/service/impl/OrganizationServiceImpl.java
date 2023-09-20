@@ -5,9 +5,11 @@ import com.arjun.organizationservice.entity.Organization;
 import com.arjun.organizationservice.mapper.OrganizationMapper;
 import com.arjun.organizationservice.repository.OrganizationRepository;
 import com.arjun.organizationservice.service.OrganizationService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class OrganizationServiceImpl implements OrganizationService {
 
     private OrganizationRepository organizationRepository;
@@ -22,4 +24,5 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         return OrganizationMapper.mapToOrganizationDto(savedOrganization);
     }
+
 }

@@ -3,6 +3,7 @@ package com.arjun.employeeservice.service.impl;
 import com.arjun.employeeservice.dto.APIResponseDto;
 import com.arjun.employeeservice.dto.DepartmentDto;
 import com.arjun.employeeservice.dto.EmployeeDto;
+import com.arjun.employeeservice.dto.OrganizationDto;
 import com.arjun.employeeservice.entity.Employee;
 import com.arjun.employeeservice.mapper.EmployeeMapper;
 import com.arjun.employeeservice.repository.EmployeeRepository;
@@ -67,6 +68,12 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .bodyToMono(DepartmentDto.class)
                 .block();
 
+        OrganizationDto organizationDto = webClient.get()
+                .uri("http://localhost:8083/api/organizations/" + employee.getOrganizationCode())
+                .retrieve()
+                .bodyToMono(OrganizationDto.class)
+                .block();
+
 //        DepartmentDto departmentDto = apiClient.getDepartment(employee.getDepartmentCode());
 
         EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(employee);
@@ -74,7 +81,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         APIResponseDto apiResponseDto = new APIResponseDto();
         apiResponseDto.setEmployee(employeeDto);
         apiResponseDto.setDepartment(departmentDto);
-
+        apiResponseDto.setOrganization(organizationDto);
 
         return apiResponseDto;
     }
